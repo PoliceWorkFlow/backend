@@ -29,6 +29,7 @@ const handleReport = (req, res, db) => {
     const{policeStation, report} = req.body;
    
     var score = (report.casesubmitted/10) + (2*report.henious) + (report.propertyCrime/10) + (report.disposal_compl/10) + (report.propertyDisp/10) + (2*report.POarrested) + (report.untrace_in_court/5) + (1*report.feedback) + (1*report.cleaniness) + (1*report.handling) + ((2*report.ndps)/5) + (1*report.arm) + (2*report.commercial) + (report.excise/5) + (report.gambling/5);
+    score = score.toFixed(2);
     console.log("Score: ", score);
     
     db('ProgressReport')
@@ -53,8 +54,8 @@ const handleReport = (req, res, db) => {
         score: score,
         datemod: getDateTime() 
     })
-    .then(user => {
-        res.json('success');
+    .then(data => {
+        res.json(data[0]);
     }) 
     .catch(err => res.status(400).json('Error in adding details'))
 }
