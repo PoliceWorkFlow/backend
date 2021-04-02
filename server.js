@@ -24,6 +24,7 @@ const progress = require('./controllers/ProgressReport');
 
 //db.select().from('Users').then(data => { console.log(data)})
 
+
 app.get('/', (req,res) => { res.send('it is working') });
 app.listen(3000, ()=> { console.log('app is running on port 3000') });
 
@@ -43,17 +44,5 @@ app.post('/addProgressReport', (req,res) => {  progress.handleReport(req, res, d
 / PSmonthlyreport --> POST = add monthly report of each PS
 / PSwisereport --> POST = add progress report of each PS.
 
-const db2 = [
-    {username : 'ps1', password: 'ps1'},
-    {username : 'ps2', password: 'ps2'},
-    {username : 'ps3', password: 'ps3'},
-    {username : 'ps4', password: 'ps4'},
-    {username : 'ps5', password: 'ps5'},
-    {username : 'ps6', password: 'ps6'},
-    {username : 'ps7', password: 'ps7'},
-    {username : 'ps8', password: 'ps8'},
-    {username : 'ps9', password: 'ps9'},
-    {username : 'ps10', password: 'ps10'},
-    {username : 'ssp', password: 'ssp'},
-]
+
 */
