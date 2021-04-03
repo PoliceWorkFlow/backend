@@ -5,6 +5,7 @@ const local = {underInvPend: '0', underInvDisp: '0', cancelledPend: '0', cancell
 
 const handleSignin = (req, res, db) => {
     const {username, password} = req.body;
+    var id;
     const report = [];
     const cases = [];
     const IPC = [];
@@ -15,10 +16,9 @@ const handleSignin = (req, res, db) => {
     db.select('*').from('Users')
        .where('username', '=', username)
        .then(data => {
-          //console.log(data[0].id);
            if(data[0].password === password){
-              
-              if(data[0].id === '11'){ 
+                id = data[0].id;
+               // console.log(id);
                 for(var i = 1; i<11; i++){
                  db.select('id','dateprogress', 'dateChallan', 'daterecovery', 'dateipc', 'datelocal').from('Users')
                  .where('id', '=', i)
@@ -32,7 +32,7 @@ const handleSignin = (req, res, db) => {
                       .then( data => {
                         report.push(data[0]); 
                       if(report.length === 10 && Challan.length === 10 && Recovery.length === 10 && IPC.length === 10 && Local.length === 10)
-                          res.json({ report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
+                          res.json({ id:id, report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
                         }) 
                       .catch(err => res.status(400).json('unable to login1')) 
                     
@@ -50,7 +50,7 @@ const handleSignin = (req, res, db) => {
                            Challan.push(data[0]);
 
                         if(report.length === 10 && Challan.length === 10 && Recovery.length === 10 && IPC.length === 10 && Local.length === 10)
-                           res.json({ report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
+                           res.json({ id:id, report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
                         }) 
                       .catch(err => console.log(err)) 
                        
@@ -68,7 +68,7 @@ const handleSignin = (req, res, db) => {
                            Recovery.push(data[0]); 
 
                         if(report.length === 10 && Challan.length === 10 && Recovery.length === 10 && IPC.length === 10 && Local.length === 10)
-                           res.json({ report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
+                           res.json({ id:id, report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
                         }) 
                       .catch(err => res.status(400).json('unable to login3')) 
 
@@ -86,7 +86,7 @@ const handleSignin = (req, res, db) => {
                         else
                           IPC.push(data[0]); 
                         if(report.length === 10 && Challan.length === 10 && Recovery.length === 10 && IPC.length === 10 && Local.length === 10)
-                          res.json({ report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
+                          res.json({ id:id, report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
                         }) 
                       .catch(err => res.status(400).json('unable to login4'))
 
@@ -105,7 +105,7 @@ const handleSignin = (req, res, db) => {
                           Local.push(data[0]); 
 
                         if(report.length === 10 && Challan.length === 10 && Recovery.length === 10 && IPC.length === 10 && Local.length === 10)
-                          res.json({ report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
+                          res.json({ id:id, report: report, challan: Challan, recovery: Recovery, ipc: IPC, local: Local});
                         }) 
                         .catch(err => console.log(err));
                      // .catch(err => res.status(400).json('unable to login5'))
@@ -113,7 +113,19 @@ const handleSignin = (req, res, db) => {
                     .catch(err => res.status(400).json('unable to login6')) 
                   }
                } 
+           else
+             res.status(400).json('unable to login')
+          })
+        // .catch(err => console.log(err));
+        .catch(err => res.status(400).json('unable to login'))
+}
 
+module.exports = {
+    handleSignin: handleSignin
+  };
+
+    
+      /* 
                else{
                   cases.push( data[0].id );
  
@@ -191,12 +203,4 @@ const handleSignin = (req, res, db) => {
                  .catch(err => res.status(400).json('unable to login')) 
                 }  
              }
-           else
-             res.status(400).json('unable to login')
-          })
-        .catch(err => res.status(400).json('unable to login'))
-}
-
-module.exports = {
-    handleSignin: handleSignin
-  };
+             */ 
