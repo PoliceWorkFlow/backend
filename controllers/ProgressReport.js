@@ -52,7 +52,8 @@ const handleReport = (req, res, db) => {
         excise: report.excise,
         gambling: report.gambling,
         score: score,
-        datemod: getDateTime() 
+        datemod: getDateTime(),
+        monYear: report.monYear 
     })
     .then(data => {
         res.json(data[0]);

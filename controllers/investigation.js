@@ -26,9 +26,60 @@ function getDateTime() {
 }
 
 const handleInv = (req, res, db) => {
-    const {policeStation, ipc, local} = req.body;
+    const {policeStation, ipc, local, type} = req.body;
     var flag = false;
- 
+
+    if(type === 'update'){
+        db('IPC')
+        .where({id: policeStation, monYear: ipc.monYear})
+        .update({
+            underInvPend: ipc.underinvPend,
+            underInvDisp: ipc.underinvDisp,
+            cancelledPend: ipc.cancelledPend,
+            cancelledDisp: ipc.cancelledDisp,
+            underInv1YrPend: ipc.over1yearPend,
+            underInv1YrDisp: ipc.over1yearDisp,
+            underInv6monPend: ipc.over6monthPend,
+            underInv6monDisp: ipc.over6monthDisp,
+            underInvo3monPend: ipc.over3monthPend,
+            underInvo3monDisp: ipc.over3monthDisp,
+            underInvl3monPend: ipc.less3monthPend,
+            underInvl3monDisp: ipc.less3monthDisp,
+            datemod: getDateTime(),
+            monYear: ipc.monYear
+        })
+        .then(data => {
+            flag = true;
+        })
+        .catch(err => res.status(400).json('Error in adding details'))
+
+        db('Local')
+        .where({id: policeStation, monYear: local.monYear})
+        .update({
+            underInvPend: local.underinvPend,
+            underInvDisp: local.underinvDisp,
+            cancelledPend: local.cancelledPend,
+            cancelledDisp: local.cancelledDisp,
+            underInv1YrPend: local.over1yearPend,
+            underInv1YrDisp: local.over1yearDisp,
+            underInv6monPend: local.over6monthPend,
+            underInv6monDisp: local.over6monthDisp,
+            underInvo3monPend: local.over3monthPend,
+            underInvo3monDisp: local.over3monthDisp,
+            underInvl3monPend: local.less3monthPend,
+            underInvl3monDisp: local.less3monthDisp,
+            datemod: getDateTime(),
+            monYear: local.monYear
+        })
+        .then(data => {
+            if(flag)
+             res.json('success');
+        })
+        .catch(err => res.status(400).json('Error in adding details'))
+
+    }
+    
+    else{
      db('IPC')
      .returning('*')
      .insert({
@@ -45,7 +96,8 @@ const handleInv = (req, res, db) => {
          underInvo3monDisp: ipc.over3monthDisp,
          underInvl3monPend: ipc.less3monthPend,
          underInvl3monDisp: ipc.less3monthDisp,
-         datemod: getDateTime()
+         datemod: getDateTime(),
+         monYear: ipc.monYear
      })
      .then(user => {
         flag = true;
@@ -68,13 +120,15 @@ const handleInv = (req, res, db) => {
          underInvo3monDisp: local.over3monthDisp,
          underInvl3monPend: local.less3monthPend,
          underInvl3monDisp: local.less3monthDisp,
-         datemod: getDateTime()
+         datemod: getDateTime(),
+         monYear: local.monYear
        })
        .then(user => {
            if(flag)
              res.json('success');
         })
-        .catch(err => res.status(400).json('Error in adding details2')) 
+        .catch(err => res.status(400).json('Error in adding details')) 
+    }
 
 }
 

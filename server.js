@@ -17,10 +17,12 @@ const db = knex({
 });
 
 const signin = require('./controllers/signin');
+const check = require('./controllers/CheckDate');
 const challan = require('./controllers/challan');
 const recovery = require('./controllers/recovery');
 const investigation = require('./controllers/investigation');
 const progress = require('./controllers/ProgressReport');
+const extractDetails = require('./controllers/extractDetails');
 
 //db.select().from('Users').then(data => { console.log(data)})
 
@@ -32,12 +34,15 @@ app.post('/signin', (req, res) => { signin.handleSignin(req, res, db) })
 
 app.post('/addchallandetails', (req, res) => { challan.handleChallan(req, res, db) })
 
+app.post('/checkMonthYear', (req, res) => { check.handleCheckDate(req, res, db) })
+
 app.post('/addrecoverydetails', (req, res) => { recovery.handleRecovery(req, res, db)})
 
 app.post('/addinvestigationdetails', (req, res) => { investigation.handleInv(req, res, db) })
 
 app.post('/addProgressReport', (req,res) => {  progress.handleReport(req, res, db) })
 
+app.post('/extractDetails', (req,res) => {  extractDetails.handleDetails(req, res, db) })
 /*
 / --> res = this is working
 / signin --> POST = success/fail

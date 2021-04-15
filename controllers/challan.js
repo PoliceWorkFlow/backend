@@ -26,11 +26,38 @@ function getDateTime() {
 } 
 
 const handleChallan = (req, res, db) => {
-    const {policeStation, challan} = req.body;
+    const {policeStation, challan, type} = req.body;
     // console.log('Police Station', policeStation);
     // console.log(challan);
-     
-    db('Challan')
+    var dateChallan;
+
+    db.select('id','dateChallan').from('Users')
+       .where('id', '=', policeStation)
+       .then(data => {
+            dateChallan = data[0].dateChallan;
+       })
+
+    if(type === 'update'){
+        db('Challan')
+        .where({id: policeStation, monYear: challan.monYear})
+        .update({
+            overloading: challan.overLoading,
+            drunken: challan.drunken,
+            overspeed: challan.overspeed,
+            withoutHelmet: challan.withoutHelmet,
+            covid19: challan.covid19,
+            others: challan.others,
+            datemod: getDateTime(),
+            monYear: challan.monYear
+        })
+        .then(data => {
+            res.json('success');
+        })
+        .catch(err => res.status(400).json('Error in adding details'))
+    }
+    
+    else{
+     db('Challan')
        .returning('*')
        .insert({
            id: policeStation ,
@@ -40,13 +67,15 @@ const handleChallan = (req, res, db) => {
            withoutHelmet: challan.withoutHelmet,
            covid19: challan.covid19,
            others: challan.others,
-           datemod: getDateTime()
+           datemod: getDateTime(),
+           monYear: challan.monYear
        })
        .then(user => {
            res.json('success');
        })
        //.catch(err => console.log(err))
        .catch(err => res.status(400).json('Error in adding details'))
+    }  
 }
 
 module.exports = {

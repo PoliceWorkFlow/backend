@@ -26,30 +26,56 @@ function getDateTime() {
 }
 
 const handleRecovery = (req, res, db) => {
-    const {policeStation, recovery} = req.body;
-    //console.log('Police Station', policeStation);
-    //console.log(recovery);
+    const {policeStation, recovery, type} = req.body;
     
-    db('Recovery')
-    .returning('*')
-    .insert({
-        id: policeStation ,
-        illicit: recovery.illict,
-        licit: recovery.licit,
-        lahan: recovery.lahan,
-        ganja: recovery.ganja,
-        poppy: recovery.poppy,
-        heroin: recovery.heroin,
-        opium: recovery.opium,
-        charas: recovery.charas,
-        tablets: recovery.tablets,
-        injections: recovery.injections,
-        others: recovery.others,
-        datemod: getDateTime()
-    })
-    .then(user => {
-        res.json('success');
-    }) .catch(err => res.status(400).json('Error in adding details'))
+    if(type === 'update'){
+        db('Recovery')
+        .where({id: policeStation, monYear: recovery.monYear})
+        .update({
+            illicit: recovery.illict,
+            licit: recovery.licit,
+            lahan: recovery.lahan,
+            ganja: recovery.ganja,
+            poppy: recovery.poppy,
+            heroin: recovery.heroin,
+            opium: recovery.opium,
+            charas: recovery.charas,
+            tablets: recovery.tablets,
+            injections: recovery.injections,
+            others: recovery.others,
+            datemod: getDateTime(),
+            monYear: recovery.monYear
+        })
+        .then(data => {
+            res.json('success');
+        })
+        .catch(err => res.status(400).json('Error in adding details'))
+    
+    }
+
+    else{
+        db('Recovery')
+        .returning('*')
+        .insert({
+            id: policeStation ,
+            illicit: recovery.illict,
+            licit: recovery.licit,
+            lahan: recovery.lahan,
+            ganja: recovery.ganja,
+            poppy: recovery.poppy,
+            heroin: recovery.heroin,
+            opium: recovery.opium,
+            charas: recovery.charas,
+            tablets: recovery.tablets,
+            injections: recovery.injections,
+            others: recovery.others,
+            datemod: getDateTime(),
+            monYear: recovery.monYear
+        })
+        .then(user => {
+            res.json('success');
+        }) .catch(err => res.status(400).json('Error in adding details'))
+    } 
 }
 
 module.exports = {
