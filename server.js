@@ -23,6 +23,7 @@ const recovery = require('./controllers/recovery');
 const investigation = require('./controllers/investigation');
 const progress = require('./controllers/ProgressReport');
 const extractDetails = require('./controllers/extractDetails');
+const extractDetailsPS = require('./controllers/extractDetailsPS');
 
 //db.select().from('Users').then(data => { console.log(data)})
 
@@ -43,6 +44,8 @@ app.post('/addinvestigationdetails', (req, res) => { investigation.handleInv(req
 app.post('/addProgressReport', (req,res) => {  progress.handleReport(req, res, db) })
 
 app.post('/extractDetails', (req,res) => {  extractDetails.handleDetails(req, res, db) })
+
+app.post('/extractDetailsPS', (req,res) => {  extractDetailsPS.handleDetails(req, res, db) })
 /*
 / --> res = this is working
 / signin --> POST = success/fail
