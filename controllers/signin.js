@@ -1,35 +1,44 @@
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
 const handleSignin = (req, res, db) => {
     const {username, password} = req.body;
     var id;
     const report = [];
+
+    var monYear = months[new Date().getMonth()] + ' ' + new Date().getFullYear();
+
+    var answer = function(ind){
+
+        db.select('*').from('ProgressReport')
+        .where({
+            id: ind,
+            monYear: monYear
+          })
+        .then( data => {
+          if(data[0] === undefined){
+            report.push({
+              id: ind, POarrested: 0, arm: 0, caseincourt: 0, cleaniness: 0, commercial: 0, compDisp: 0, datemod: " ",
+              excise: 0, feedback: 0, gambling: 0, handling: 0, heniusCrime: 0, monYear: monYear, ndps: 0, propCrime: 0, 
+              propDisp: 0, score: 0, untraceInCourt: 0
+            })
+          }
+          else
+            report.push(data[0]); 
+
+          if(report.length === 10)
+            res.json({ id:id, report: report});
+          }) 
+        .catch(err => res.status(400).json('unable to login')) 
+    }
  
     db.select('*').from('Users')
        .where('username', '=', username)
        .then(data => {
            if(data[0].password === password){
                 id = data[0].id;
-              
-                for(var i = 1; i<11; i++){
-                  db.select('id','dateprogress').from('Users')
-                  .where('id', '=', i)
-                  .then(data => {
-
-                        db.select('*').from('ProgressReport')
-                        .where({
-                            id: data[0].id,
-                            datemod: data[0].dateprogress
-                          })
-                        .then( data => {
-                          report.push(data[0]); 
-
-                        if(report.length === 10 /*&& Challan.length === 10 && Recovery.length === 10 && IPC.length === 10 && Local.length === 10*/)
-                            res.json({ id:id, report: report /*, challan: Challan, recovery: Recovery, ipc: IPC, local: Local */});
-                          }) 
-                        .catch(err => res.status(400).json('unable to login1')) 
-                   })
-                   .catch(err => res.status(400).json('unable to login6')) 
-                    }
-                   }   
+                for(var i = 1; i<11; i++)
+                    answer(i);
+              }   
            else
              res.status(400).json('unable to login')
           })

@@ -24,9 +24,10 @@ const investigation = require('./controllers/investigation');
 const progress = require('./controllers/ProgressReport');
 const extractDetails = require('./controllers/extractDetails');
 const extractDetailsPS = require('./controllers/extractDetailsPS');
+const extractReport = require('./controllers/extractReportDetails');
+const notification = require('./controllers/sendNotification');
 
 //db.select().from('Users').then(data => { console.log(data)})
-
 
 app.get('/', (req,res) => { res.send('it is working') });
 app.listen(3000, ()=> { console.log('app is running on port 3000') });
@@ -46,6 +47,11 @@ app.post('/addProgressReport', (req,res) => {  progress.handleReport(req, res, d
 app.post('/extractDetails', (req,res) => {  extractDetails.handleDetails(req, res, db) })
 
 app.post('/extractDetailsPS', (req,res) => {  extractDetailsPS.handleDetails(req, res, db) })
+
+app.post('/extractReportDetails', (req,res) => {  extractReport.handleDetails(req, res, db) })
+
+app.post('/sendNotification', (req,res) => {  notification.handleDetails(req, res, db) })
+
 /*
 / --> res = this is working
 / signin --> POST = success/fail

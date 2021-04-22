@@ -26,39 +26,71 @@ function getDateTime() {
 }
 
 const handleReport = (req, res, db) => {
-    const{policeStation, report} = req.body;
+    const{policeStation, report, type} = req.body;
    
     var score = (report.casesubmitted/10) + (2*report.henious) + (report.propertyCrime/10) + (report.disposal_compl/10) + (report.propertyDisp/10) + (2*report.POarrested) + (report.untrace_in_court/5) + (1*report.feedback) + (1*report.cleaniness) + (1*report.handling) + ((2*report.ndps)/5) + (1*report.arm) + (2*report.commercial) + (report.excise/5) + (report.gambling/5);
     score = score.toFixed(2);
     console.log("Score: ", score);
+
+    if(type === 'update'){
+        db('ProgressReport')
+        .where({id: policeStation, monYear: report.monYear})
+        .insert({
+            id: policeStation ,
+            caseincourt: report.casesubmitted,
+            propDisp: report.propertyDisp,
+            heniusCrime: report.henious,
+            POarrested: report.POarrested,
+            propCrime: report.propertyCrime,
+            untraceInCourt: report.untrace_in_court,
+            compDisp: report.disposal_compl,
+            cleaniness: report.cleaniness,
+            feedback: report.feedback,
+            handling: report.handling,
+            ndps: report.ndps,
+            commercial: report.commercial,
+            arm: report.arm,
+            excise: report.excise,
+            gambling: report.gambling,
+            score: score,
+            datemod: getDateTime(),
+            monYear: report.monYear 
+        })
+        .then(data => {
+            res.json('success');
+        }) 
+        .catch(err => res.status(400).json('Error in adding details'))
+    }
     
-    db('ProgressReport')
-    .returning('*')
-    .insert({
-        id: policeStation ,
-        caseincourt: report.casesubmitted,
-        propDisp: report.propertyDisp,
-        heniusCrime: report.henious,
-        POarrested: report.POarrested,
-        propCrime: report.propertyCrime,
-        untraceInCourt: report.untrace_in_court,
-        compDisp: report.disposal_compl,
-        cleaniness: report.cleaniness,
-        feedback: report.feedback,
-        handling: report.handling,
-        ndps: report.ndps,
-        commercial: report.commercial,
-        arm: report.arm,
-        excise: report.excise,
-        gambling: report.gambling,
-        score: score,
-        datemod: getDateTime(),
-        monYear: report.monYear 
-    })
-    .then(data => {
-        res.json(data[0]);
-    }) 
-    .catch(err => res.status(400).json('Error in adding details'))
+    else{
+        db('ProgressReport')
+        .returning('*')
+        .insert({
+            id: policeStation ,
+            caseincourt: report.casesubmitted,
+            propDisp: report.propertyDisp,
+            heniusCrime: report.henious,
+            POarrested: report.POarrested,
+            propCrime: report.propertyCrime,
+            untraceInCourt: report.untrace_in_court,
+            compDisp: report.disposal_compl,
+            cleaniness: report.cleaniness,
+            feedback: report.feedback,
+            handling: report.handling,
+            ndps: report.ndps,
+            commercial: report.commercial,
+            arm: report.arm,
+            excise: report.excise,
+            gambling: report.gambling,
+            score: score,
+            datemod: getDateTime(),
+            monYear: report.monYear 
+        })
+        .then(data => {
+            res.json('success');
+        }) 
+        .catch(err => res.status(400).json('Error in adding details'))
+    }
 }
 
 module.exports = {
