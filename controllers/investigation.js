@@ -28,6 +28,7 @@ function getDateTime() {
 const handleInv = (req, res, db) => {
     const {policeStation, ipc, local, type} = req.body;
     var flag = false;
+    console.log(ipc);
 
     if(type === 'update'){
         db('IPC')
@@ -102,6 +103,7 @@ const handleInv = (req, res, db) => {
      .then(user => {
         flag = true;
        })
+      // .catch(err => console.log(err));
      .catch(err => res.status(400).json('Error in adding details1'))
     
      db('Local')
@@ -127,6 +129,7 @@ const handleInv = (req, res, db) => {
            if(flag)
              res.json('success');
         })
+        //.catch(err => console.log(err));
         .catch(err => res.status(400).json('Error in adding details')) 
     }
 

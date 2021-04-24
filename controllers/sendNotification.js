@@ -13,7 +13,7 @@ const handleDetails = (req, res, db) => {
 
     var mailOptions = {
     from: 'ssprupnagar123@gmail.com',
-    to: '2018csb1085@iitrpr.ac.in, 2018csb1173@iitrpr.ac.in, 2018csb1108@iitrpr.ac.in',
+    to: '2018csb1085@iitrpr.ac.in',
     subject: 'Update ' + monYear + ' Report for ' + type,
     html: 'Hi ' + ps + ' Police Station' + '.' +
          '<p> Kindly update ' + type + ' report for ' + monYear + ' ASAP. </p>' + 

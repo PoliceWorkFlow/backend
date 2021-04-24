@@ -34,8 +34,9 @@ const handleReport = (req, res, db) => {
 
     if(type === 'update'){
         db('ProgressReport')
+        .returning('*')
         .where({id: policeStation, monYear: report.monYear})
-        .insert({
+        .update({
             id: policeStation ,
             caseincourt: report.casesubmitted,
             propDisp: report.propertyDisp,
@@ -57,7 +58,7 @@ const handleReport = (req, res, db) => {
             monYear: report.monYear 
         })
         .then(data => {
-            res.json('success');
+            res.json(data[0]);
         }) 
         .catch(err => res.status(400).json('Error in adding details'))
     }
@@ -87,7 +88,7 @@ const handleReport = (req, res, db) => {
             monYear: report.monYear 
         })
         .then(data => {
-            res.json('success');
+            res.json(data[0]);
         }) 
         .catch(err => res.status(400).json('Error in adding details'))
     }
