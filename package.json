@@ -4,9 +4,11 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "init": "^0.1.2",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.1",
     "mongodb": "^3.6.4",
     "mongoose": "^5.12.0",

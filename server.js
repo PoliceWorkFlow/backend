@@ -1,6 +1,7 @@
 const express = require('express');
 const knex = require('knex');
 const cors = require('cors');
+const bcrypt = require('bcrypt');
 const app = express();
 
 app.use(express.json());
@@ -17,6 +18,8 @@ const db = knex({
 });
 
 const signin = require('./controllers/signin');
+const forgot = require('./controllers/forgot');
+const Update = require('./controllers/update');
 const check = require('./controllers/CheckDate');
 const challan = require('./controllers/challan');
 const recovery = require('./controllers/recovery');
@@ -24,6 +27,7 @@ const investigation = require('./controllers/investigation');
 const progress = require('./controllers/ProgressReport');
 const extractDetails = require('./controllers/extractDetails');
 const extractDetailsPS = require('./controllers/extractDetailsPS');
+const extractDetailsReport = require('./controllers/extractDetailsReport');
 const extractReport = require('./controllers/extractReportDetails');
 const notification = require('./controllers/sendNotification');
 
@@ -32,7 +36,11 @@ const notification = require('./controllers/sendNotification');
 app.get('/', (req,res) => { res.send('it is working') });
 app.listen(3000, ()=> { console.log('app is running on port 3000') });
 
-app.post('/signin', (req, res) => { signin.handleSignin(req, res, db) }) 
+app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt)}) 
+
+app.post('/forgot', (req, res) => { forgot.handleForgot(req, res, db) }) 
+
+app.post('/update_password', (req, res) => { Update.handleUpdate(req, res, db, bcrypt) }) 
 
 app.post('/addchallandetails', (req, res) => { challan.handleChallan(req, res, db) })
 
@@ -48,9 +56,12 @@ app.post('/extractDetails', (req,res) => {  extractDetails.handleDetails(req, re
 
 app.post('/extractDetailsPS', (req,res) => {  extractDetailsPS.handleDetails(req, res, db) })
 
+app.post('/extractDetailsProgressReport', (req,res) => {  extractDetailsReport.handleDetails(req, res, db) })
+
 app.post('/extractReportDetails', (req,res) => {  extractReport.handleDetails(req, res, db) })
 
 app.post('/sendNotification', (req,res) => {  notification.handleDetails(req, res, db) })
+
 
 /*
 / --> res = this is working

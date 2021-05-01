@@ -1,11 +1,18 @@
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-const handleSignin = (req, res, db) => {
+const handleSignin = (req, res, db, bcrypt) => {
     const {username, password} = req.body;
     var id;
     const report = [];
+    const dates = [];
+    const IPC = [];
+    const Local = [];
+    const Challan = [];
 
     var monYear = months[new Date().getMonth()] + ' ' + new Date().getFullYear();
+    const month = monYear.split(' ')[0];
+    var year = monYear.split(' ')[1];
+    var index = months.indexOf(month);
 
     var answer = function(ind){
 
@@ -30,15 +37,82 @@ const handleSignin = (req, res, db) => {
           }) 
         .catch(err => res.status(400).json('unable to login')) 
     }
+
+    var answer2 = function(date, id){
+      db.select('*').from('Challan')
+      .where({
+            id: id,
+            monYear: date
+       })
+       .then(data => {
+          if(data[0] === undefined){
+              Challan.push({
+                id: id, overloading: '0', withoutHelmet: '0', drunken: '0', covid19: '0', overspeed: '0', others: '0', monYear: date
+              });          
+             }
+            else  
+               Challan.push(data[0]);
+
+          if(Challan.length === dates.length && IPC.length === dates.length && Local.length === dates.length)
+              res.json({id:id, challan: Challan, ipc: IPC, local: Local})
+       })
+       .catch(err => res.status(400).json('error')) 
+      
+       db.select('*').from('IPC')
+       .where({
+            id: id,
+            monYear: date
+        })
+        .then(data => {
+              if(data[0] === undefined){
+                  IPC.push({
+                    id:id, underInvPend: '0', underInvDisp: '0', cancelledPend: '0', cancelledDisp: '0', underInv1YrPend: '0', underInv1YrDisp: '0', underInv6monPend: '0', underInv6monDisp: '0', underInvo3monPend: '0', underInvo3monDisp: '0', underInvl3monPend: '0', underInvl3monDisp: '0', monYear: date
+                  });
+                }
+                else
+                  IPC.push(data[0]); 
+        
+          if(Challan.length === dates.length && IPC.length === dates.length && Local.length === dates.length)
+              res.json({id:id, challan: Challan, ipc: IPC, local: Local})   
+       })
+       .catch(err => res.status(400).json('error'))  
+      
+       db.select('*').from('Local')
+         .where({
+              id: id,
+              monYear: date
+          })
+          .then(data => {
+                if(data[0] === undefined){
+                    Local.push({
+                      id:id, underInvPend: '0', underInvDisp: '0', cancelledPend: '0', cancelledDisp: '0', underInv1YrPend: '0', underInv1YrDisp: '0', underInv6monPend: '0', underInv6monDisp: '0', underInvo3monPend: '0', underInvo3monDisp: '0', underInvl3monPend: '0', underInvl3monDisp: '0', monYear: date
+                    });
+                  }
+                  else
+                    Local.push(data[0]);  
+            
+              if(Challan.length === dates.length && IPC.length === dates.length && Local.length === dates.length)
+                res.json({ id:id,challan: Challan, ipc: IPC, local: Local})  
+         })
+         //.catch(err => console.log(err))
+         .catch(err => res.status(400).json('error'))  
+    }
  
     db.select('*').from('Users')
        .where('username', '=', username)
        .then(data => {
-           if(data[0].password === password){
-                id = data[0].id;
-                for(var i = 1; i<11; i++)
+           const isValid = bcrypt.compareSync(password, data[0].password.trim());
+           if(isValid){
+              id = data[0].id;
+          
+              if(data[0].id === '11'){
+                  for(var i = 1; i<11; i++)
                     answer(i);
-              }   
+              }
+              else{
+                res.json({id: id})
+              }
+           }
            else
              res.status(400).json('unable to login')
           })

@@ -6,13 +6,13 @@ const handleDetails = (req, res, db) => {
     var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'ssprupnagar123@gmail.com',
-        pass: 'Ssprupnagar@123'
+        user: 'cktdilpreet@gmail.com',
+        pass: ''
     }
     });
 
     var mailOptions = {
-    from: 'ssprupnagar123@gmail.com',
+    from: 'cktdilpreet@gmail.com',
     to: '2018csb1085@iitrpr.ac.in',
     subject: 'Update ' + monYear + ' Report for ' + type,
     html: 'Hi ' + ps + ' Police Station' + '.' +

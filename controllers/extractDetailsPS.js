@@ -2,7 +2,6 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 
 const handleDetails = (req, res, db) => {
     const {id, monYear, range} = req.body;
-
     const dates = [];
     const month = monYear.split(' ')[0];
     var year = monYear.split(' ')[1];
@@ -34,7 +33,7 @@ const handleDetails = (req, res, db) => {
          }
     }
 
-    else {
+    else if(range === 'Last 9 Months Data') {
         dates.push(monYear);
         index--;
         for(var i=0; i<8; i++){
@@ -47,10 +46,24 @@ const handleDetails = (req, res, db) => {
          }
     }
 
+    else{
+      //console.log('A');
+      dates.push(monYear);
+      index--;
+      for(var i=0; i<11; i++){
+          if(index < 0){
+            index = 11;
+            year = year - 1;
+          }
+       dates.push(months[index] + ' ' + year);
+       index--;
+       }
+    }
+
     const IPC = [];
     const Local = [];
     const Challan = [];
-
+  
     
     var answer = function(date){
       db.select('*').from('Challan')
