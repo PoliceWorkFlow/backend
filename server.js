@@ -11,9 +11,9 @@ const db = knex({
   client: 'pg',
   connection: {
     host: '127.0.0.1',
-    user: 'postgres',
-    password: '1234',
-    database: 'postgres',
+    user: 'dilpreet',
+    password: 'dilpreet',
+    database: 'police',
   }
 });
 
@@ -33,34 +33,34 @@ const notification = require('./controllers/sendNotification');
 
 //db.select().from('Users').then(data => { console.log(data)})
 
-app.get('/', (req,res) => { res.send('it is working') });
-app.listen(3000, ()=> { console.log('app is running on port 3000') });
+app.get('/api', (req,res) => { res.send('it is working') });
+app.listen(3000,'localhost',()=> { console.log('app is running on port 3000') });
 
-app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt)}) 
+app.post('/api/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt)}) 
 
-app.post('/forgot', (req, res) => { forgot.handleForgot(req, res, db) }) 
+app.post('/api/forgot', (req, res) => { forgot.handleForgot(req, res, db) }) 
 
-app.post('/update_password', (req, res) => { Update.handleUpdate(req, res, db, bcrypt) }) 
+app.post('/api/update_password', (req, res) => { Update.handleUpdate(req, res, db, bcrypt) }) 
 
-app.post('/addchallandetails', (req, res) => { challan.handleChallan(req, res, db) })
+app.post('/api/addchallandetails', (req, res) => { challan.handleChallan(req, res, db) })
 
-app.post('/checkMonthYear', (req, res) => { check.handleCheckDate(req, res, db) })
+app.post('/api/checkMonthYear', (req, res) => { check.handleCheckDate(req, res, db) })
 
-app.post('/addrecoverydetails', (req, res) => { recovery.handleRecovery(req, res, db)})
+app.post('/api/addrecoverydetails', (req, res) => { recovery.handleRecovery(req, res, db)})
 
-app.post('/addinvestigationdetails', (req, res) => { investigation.handleInv(req, res, db) })
+app.post('/api/addinvestigationdetails', (req, res) => { investigation.handleInv(req, res, db) })
 
-app.post('/addProgressReport', (req,res) => {  progress.handleReport(req, res, db) })
+app.post('/api/addProgressReport', (req,res) => {  progress.handleReport(req, res, db) })
 
-app.post('/extractDetails', (req,res) => {  extractDetails.handleDetails(req, res, db) })
+app.post('/api/extractDetails', (req,res) => {  extractDetails.handleDetails(req, res, db) })
 
-app.post('/extractDetailsPS', (req,res) => {  extractDetailsPS.handleDetails(req, res, db) })
+app.post('/api/extractDetailsPS', (req,res) => {  extractDetailsPS.handleDetails(req, res, db) })
 
-app.post('/extractDetailsProgressReport', (req,res) => {  extractDetailsReport.handleDetails(req, res, db) })
+app.post('/api/extractDetailsProgressReport', (req,res) => {  extractDetailsReport.handleDetails(req, res, db) })
 
-app.post('/extractReportDetails', (req,res) => {  extractReport.handleDetails(req, res, db) })
+app.post('/api/extractReportDetails', (req,res) => {  extractReport.handleDetails(req, res, db) })
 
-app.post('/sendNotification', (req,res) => {  notification.handleDetails(req, res, db) })
+app.post('/api/sendNotification', (req,res) => {  notification.handleDetails(req, res, db) })
 
 
 /*
