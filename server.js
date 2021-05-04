@@ -3,6 +3,7 @@ const knex = require('knex');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const app = express();
+const schedule = require('node-schedule');
 
 app.use(express.json());
 app.use(cors());
@@ -11,9 +12,9 @@ const db = knex({
   client: 'pg',
   connection: {
     host: '127.0.0.1',
-    user: 'dilpreet',
-    password: 'dilpreet',
-    database: 'police',
+    user: 'postgres',
+    password: '1234',
+    database: 'postgres',
   }
 });
 
@@ -30,8 +31,15 @@ const extractDetailsPS = require('./controllers/extractDetailsPS');
 const extractDetailsReport = require('./controllers/extractDetailsReport');
 const extractReport = require('./controllers/extractReportDetails');
 const notification = require('./controllers/sendNotification');
+const notice = require('./controllers/sendNotice');
+const monthly = require('./controllers/sendMonthly');
+const compare = require('./controllers/compare');
 
 //db.select().from('Users').then(data => { console.log(data)})
+
+const job = schedule.scheduleJob('00 12 26 * *', function(){
+     monthly.handleMonthly(db);
+});
 
 app.get('/api', (req,res) => { res.send('it is working') });
 app.listen(3000,'localhost',()=> { console.log('app is running on port 3000') });
@@ -56,11 +64,15 @@ app.post('/api/extractDetails', (req,res) => {  extractDetails.handleDetails(req
 
 app.post('/api/extractDetailsPS', (req,res) => {  extractDetailsPS.handleDetails(req, res, db) })
 
-app.post('/api/extractDetailsProgressReport', (req,res) => {  extractDetailsReport.handleDetails(req, res, db) })
+app.post('/api/extractDetailsProgressReport', (req,res) => { extractDetailsReport.handleDetails(req, res, db) })
 
 app.post('/api/extractReportDetails', (req,res) => {  extractReport.handleDetails(req, res, db) })
 
 app.post('/api/sendNotification', (req,res) => {  notification.handleDetails(req, res, db) })
+
+app.post('/api/notice', (req,res) => { notice.handleDetails(req, res, db) })
+
+app.post('/api/compare', (req,res) => {compare.handleDetails(req, res, db) })
 
 
 /*

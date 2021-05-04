@@ -72,7 +72,7 @@ const handleDetails = (req, res, db) => {
           if(data[0] === undefined){
               report.push({
                 id: id, POarrested: 0, arm: 0, caseincourt: 0, cleaniness: 0, commercial: 0, compDisp: 0, datemod: " ",
-                excise: 0, feedback: 0, gambling: 0, handling: 0, heniusCrime: 0, monYear: monYear, ndps: 0, propCrime: 0, 
+                excise: 0, feedback: 0, gambling: 0, handling: 0, heniusCrime: 0, ndps: 0, propCrime: 0, 
                 propDisp: 0, score: 0, untraceInCourt: 0, monYear: date
               });          
              }
