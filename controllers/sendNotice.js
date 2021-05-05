@@ -45,7 +45,7 @@ const handleDetails = (req, res, db) => {
     service: 'gmail',
     auth: {
         user: 'cktdilpreet@gmail.com',
-        pass: 'Waheguru09@'
+        pass: ''
     }
     });
 
