@@ -90,6 +90,7 @@ const handleReport = (req, res, db) => {
         .then(data => {
             res.json(data[0]);
         }) 
+        //.catch(err => console.log(err))
         .catch(err => res.status(400).json('Error in adding details'))
     }
 }

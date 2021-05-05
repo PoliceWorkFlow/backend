@@ -44,14 +44,14 @@ const handleDetails = (req, res, db) => {
     var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'cktdilpreet@gmail.com',
-        pass: 'Waheguru09@'
+        user: 'ssprupnagar123@gmail.com',
+        pass: 'Ssprupnagar@123'
     }
     });
 
-    var email1 = ['2018csb1085@iitrpr.ac.in', 'cktdilpreet@gmail.com']
+    var email1 = ['2018csb1085@iitrpr.ac.in']
     var mailOptions = {
-    from: 'cktdilpreet@gmail.com',
+    from: 'ssprupnagar123@gmail.com',
     to: email1,
     subject: 'Message from SSP office',
     body: message

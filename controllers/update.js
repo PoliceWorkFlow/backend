@@ -1,7 +1,7 @@
 const police_station = ['Nangal', 'City Morinda', 'Sri Anandpur Sahib', 'City Rupnagar', 'Kiratpur Sahib', 'Sri Chamkaur Sahib', 'Sadar Rupnagar', 'Sadar Morinda', 'Nurpurbedi', 'Singh Bhagwantpur', 'SSP Office'];
 
 const handleUpdate = (req, res, db, bcrypt) => {
-    const {station, email, new_pass} = req.body;
+    const {station, new_pass} = req.body;
     const index = police_station.indexOf(station) + 1;
 
     const saltRounds = 10;

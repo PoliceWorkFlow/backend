@@ -12,14 +12,15 @@ const db = knex({
   client: 'pg',
   connection: {
     host: '127.0.0.1',
-    user: 'postgres',
-    password: '1234',
-    database: 'postgres',
+    user: 'dilpreet',
+    password: 'dilpreet',
+    database: 'police',
   }
 });
 
 const signin = require('./controllers/signin');
 const forgot = require('./controllers/forgot');
+const checkLink = require('./controllers/checkLink');
 const Update = require('./controllers/update');
 const check = require('./controllers/CheckDate');
 const challan = require('./controllers/challan');
@@ -47,6 +48,8 @@ app.listen(3000,'localhost',()=> { console.log('app is running on port 3000') })
 app.post('/api/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt)}) 
 
 app.post('/api/forgot', (req, res) => { forgot.handleForgot(req, res, db) }) 
+
+app.post('/api/checkLink', (req, res) => { checkLink.handleForgot(req, res, db) }) 
 
 app.post('/api/update_password', (req, res) => { Update.handleUpdate(req, res, db, bcrypt) }) 
 
