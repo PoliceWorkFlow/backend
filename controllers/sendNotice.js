@@ -51,10 +51,18 @@ const handleDetails = (req, res, db) => {
 
     var email1 = ['2018csb1085@iitrpr.ac.in']
     var mailOptions = {
-    from: 'ssprupnagar123@gmail.com',
-    to: email1,
-    subject: 'Message from SSP office',
-    body: message
+        from: 'ssprupnagar123@gmail.com',
+        to: email1,
+        subject: 'Message from SSP office',
+        html: `<div style="
+        border: 1px solid black;
+        padding: 20px;
+        font-family: sans-serif;
+        line-height: 2;
+        font-size: 20px; 
+        ">
+        <p>${message}</p>`
+
     };
 
     transporter.sendMail(mailOptions, function(error, info){
