@@ -9,7 +9,7 @@ const handleForgot = (req, res, db) => {
         service: 'gmail',
         auth: {
             user: 'ssprupnagar123@gmail.com',
-            pass: 'Ssprupnagar@123'
+            pass: ''
         }
     });
 
@@ -26,7 +26,7 @@ const handleForgot = (req, res, db) => {
                 subject: "Password Reset",
                 html: `
              <p>You requested for password reset</p>
-             <h4>Click on this <a href = 'http://localhost:3001/change-password/${currentDate}+++${data[0].email}++${station}' >link</a> to reset password</h4>
+             <h4>Click on this <a href = 'http://172.26.1.62/change-password/${currentDate}+++${data[0].email}++${station}' >link</a> to reset password</h4>
              <h4>Link will be active for only 15 minutes</h4>
              <h4>Link can be used only once to change the password!!!</h4>
              `

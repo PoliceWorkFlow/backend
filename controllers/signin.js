@@ -10,9 +10,16 @@ const handleSignin = (req, res, db, bcrypt) => {
     const Challan = [];
 
     var monYear = months[new Date().getMonth()] + ' ' + new Date().getFullYear();
-    const month = monYear.split(' ')[0];
     var year = monYear.split(' ')[1];
-    var index = months.indexOf(month);
+    var index = new Date().getMonth();
+
+    if(index === 0)
+       year = year - 1;
+    else
+      index = index - 1;
+
+    monYear = months[index] + ' ' + year;
+  //  console.log(monYear)
 
     var answer = function(ind){
 

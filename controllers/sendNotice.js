@@ -1,7 +1,7 @@
 var nodemailer = require('nodemailer');
 
 const handleDetails = (req, res, db) => {
-    const {message, type} = req.body;
+    const { message, subject, type } = req.body;
     const email = [];
 
     // if(type === 'all'){
@@ -33,49 +33,43 @@ const handleDetails = (req, res, db) => {
     //                     to: email,
     //                     subject: 'Update ' + monYear + ' Report for ' + type,
     //                     html: msg
-                             
+
     //                     };*/
     //             } 
     //         })   
     //    }
-      
+
     // }
 
     var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'ssprupnagar123@gmail.com',
-        pass: 'Ssprupnagar@123'
-    }
+        service: 'gmail',
+        auth: {
+            user: 'ssprupnagar123@gmail.com',
+            pass: ''
+        }
     });
 
     var email1 = ['2018csb1085@iitrpr.ac.in']
     var mailOptions = {
         from: 'ssprupnagar123@gmail.com',
         to: email1,
-        subject: 'Message from SSP office',
-        html: `<div style="
-        border: 1px solid black;
-        padding: 20px;
-        font-family: sans-serif;
-        line-height: 2;
-        font-size: 20px; 
-        ">
-        <p>${message}</p>`
+        subject: subject,
+        html: ` <p>${message}</p>` +
+        '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
 
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
-    if (error) 
-        res.status(400).json('unable to send email')
-    else 
-        res.json('Email sent');
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error)
+            res.status(400).json('unable to send email')
+        else
+            res.json('Email sent');
     });
- }
+}
 
 module.exports = {
     handleDetails: handleDetails
-  };
+};
 
-    
- 
+
+

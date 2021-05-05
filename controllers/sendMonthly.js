@@ -9,7 +9,7 @@ const handleMonthly = (db) => {
         service: 'gmail',
         auth: {
             user: 'ssprupnagar123@gmail.com',
-            pass: 'Ssprupnagar@123'
+            pass: ''
         }
     });
 

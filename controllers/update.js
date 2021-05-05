@@ -28,13 +28,4 @@ module.exports = {
     handleUpdate: handleUpdate
   };
 
-    /*  db('Users')
-    .where({id: index})
-    .update({
-        password: new_pass
-     })
-     .then(data => {
-        res.json('success');
-    })
-    .catch(err => res.status(400).json('Error')) */
-
+  

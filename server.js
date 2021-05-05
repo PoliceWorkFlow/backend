@@ -12,9 +12,9 @@ const db = knex({
   client: 'pg',
   connection: {
     host: '127.0.0.1',
-    user: 'dilpreet',
-    password: 'dilpreet',
-    database: 'police',
+    user: 'postgres',
+    password: '1234',
+    database: 'postgres',
   }
 });
 
@@ -35,6 +35,7 @@ const notification = require('./controllers/sendNotification');
 const notice = require('./controllers/sendNotice');
 const monthly = require('./controllers/sendMonthly');
 const compare = require('./controllers/compare');
+const profile = require('./controllers/profile');
 
 //db.select().from('Users').then(data => { console.log(data)})
 
@@ -48,6 +49,8 @@ app.listen(3000,'localhost',()=> { console.log('app is running on port 3000') })
 app.post('/api/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt)}) 
 
 app.post('/api/forgot', (req, res) => { forgot.handleForgot(req, res, db) }) 
+
+app.post('/api/profile', (req, res) => { profile.handleProfile(req, res, db, bcrypt) }) 
 
 app.post('/api/checkLink', (req, res) => { checkLink.handleForgot(req, res, db) }) 
 
