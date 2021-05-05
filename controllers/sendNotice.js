@@ -53,15 +53,9 @@ const handleDetails = (req, res, db) => {
     var mailOptions = {
         from: 'ssprupnagar123@gmail.com',
         to: email1,
-<<<<<<< HEAD
         subject: subject,
         html: ` <p>${message}</p>` +
         '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
-
-=======
-        subject: 'Message from SSP office',
-        html: `<p>${message}</p>`
->>>>>>> 9b453906173e449334df14924e0cc17e4a866518
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
