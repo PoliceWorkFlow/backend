@@ -27,9 +27,11 @@ function getDateTime() {
 
 const handleInv = (req, res, db) => {
     const {policeStation, ipc, local, type} = req.body;
+    if (req.userId !== policeStation)
+     res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    else{
     var flag = false;
-    console.log(ipc);
-
+   
     if(type === 'update'){
         db('IPC')
         .where({id: policeStation, monYear: ipc.monYear})
@@ -132,6 +134,7 @@ const handleInv = (req, res, db) => {
         //.catch(err => console.log(err));
         .catch(err => res.status(400).json('Error in adding details')) 
     }
+}
 
 }
 

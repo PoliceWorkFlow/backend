@@ -15,8 +15,9 @@ const handleDetails = (req, res, db) => {
     //      /* var mailOptions = {
     //         from: 'cktdilpreet@gmail.com',
     //         to: email,
-    //         subject: 'Message from SP office',
-    //         html: msg 
+    //         subject: subject,
+    //         html: ` <p>${message}</p>` +
+    //     '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>' 
     //         };*/
     // })
     // }
@@ -31,8 +32,9 @@ const handleDetails = (req, res, db) => {
     //                 /*var mailOptions = {
     //                     from: 'Message from SP office',
     //                     to: email,
-    //                     subject: 'Update ' + monYear + ' Report for ' + type,
-    //                     html: msg
+    //                     subject: subject,
+    //                     html: ` <p>${message}</p>` +
+      //  '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
 
     //                     };*/
     //             } 
@@ -56,6 +58,7 @@ const handleDetails = (req, res, db) => {
         subject: subject,
         html: ` <p>${message}</p>` +
         '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
+
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

@@ -50,7 +50,7 @@ const handleMonthly = (db) => {
                     to: '2018csb1085@iitrpr.ac.in',
                     subject: 'Update ' + monYear + ' Report',
                     html: 'Hi ' + police_station[index-1] + ' Police Station' + '.' +
-                        '<p> Kindly update <b>' + type + '</b> Report for ' + monYear + ' ASAP. </p>' +
+                        '<p> Kindly update <b>' + type + ' Report for ' + monYear + '</b> ASAP. </p>' +
                         '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
 
                 };

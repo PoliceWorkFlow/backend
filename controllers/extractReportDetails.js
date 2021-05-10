@@ -3,6 +3,7 @@ const months = ["January", "February", "March", "April", "May", "June", "July", 
 const handleDetails = (req, res, db) => {
     const {monYear} = req.body;
     const report = [];
+    console.log(req.userId);
    
     var answer = function(ind){
         db.select('*').from('ProgressReport')

@@ -6,15 +6,24 @@ const app = express();
 const schedule = require('node-schedule');
 
 app.use(express.json());
-app.use(cors());
+
+// app.use(cors({
+//   origin: 'http://localhost:3001',
+// }));
+
+
+app.use(cors({
+  origin: 'http://103.118.50.49',
+}));
+
 
 const db = knex({
   client: 'pg',
   connection: {
     host: '127.0.0.1',
-    user: 'postgres',
-    password: '1234',
-    database: 'postgres',
+    user: 'dilpreet',
+    password: 'dilpreet',
+    database: 'police',
   }
 });
 
@@ -36,6 +45,7 @@ const notice = require('./controllers/sendNotice');
 const monthly = require('./controllers/sendMonthly');
 const compare = require('./controllers/compare');
 const profile = require('./controllers/profile');
+const verifyToken = require("./auth/verifyToken");
 
 //db.select().from('Users').then(data => { console.log(data)})
 
@@ -50,35 +60,35 @@ app.post('/api/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt
 
 app.post('/api/forgot', (req, res) => { forgot.handleForgot(req, res, db) }) 
 
-app.post('/api/profile', (req, res) => { profile.handleProfile(req, res, db, bcrypt) }) 
+app.post('/api/profile', verifyToken, (req, res) => { profile.handleProfile(req, res, db, bcrypt) }) 
 
 app.post('/api/checkLink', (req, res) => { checkLink.handleForgot(req, res, db) }) 
 
 app.post('/api/update_password', (req, res) => { Update.handleUpdate(req, res, db, bcrypt) }) 
 
-app.post('/api/addchallandetails', (req, res) => { challan.handleChallan(req, res, db) })
+app.post('/api/addchallandetails', verifyToken, (req, res) => { challan.handleChallan(req, res, db) })
 
-app.post('/api/checkMonthYear', (req, res) => { check.handleCheckDate(req, res, db) })
+app.post('/api/checkMonthYear', verifyToken, (req, res) => { check.handleCheckDate(req, res, db) })
 
-app.post('/api/addrecoverydetails', (req, res) => { recovery.handleRecovery(req, res, db)})
+app.post('/api/addrecoverydetails', verifyToken, (req, res) => { recovery.handleRecovery(req, res, db)})
 
-app.post('/api/addinvestigationdetails', (req, res) => { investigation.handleInv(req, res, db) })
+app.post('/api/addinvestigationdetails', verifyToken, (req, res) => { investigation.handleInv(req, res, db) })
 
-app.post('/api/addProgressReport', (req,res) => {  progress.handleReport(req, res, db) })
+app.post('/api/addProgressReport', verifyToken, (req,res) => {  progress.handleReport(req, res, db) })
 
-app.post('/api/extractDetails', (req,res) => {  extractDetails.handleDetails(req, res, db) })
+app.post('/api/extractDetails', verifyToken, (req,res) => {  extractDetails.handleDetails(req, res, db) })
 
-app.post('/api/extractDetailsPS', (req,res) => {  extractDetailsPS.handleDetails(req, res, db) })
+app.post('/api/extractDetailsPS', verifyToken, (req,res) => {  extractDetailsPS.handleDetails(req, res, db) })
 
-app.post('/api/extractDetailsProgressReport', (req,res) => { extractDetailsReport.handleDetails(req, res, db) })
+app.post('/api/extractDetailsProgressReport', verifyToken, (req,res) => { extractDetailsReport.handleDetails(req, res, db) })
 
-app.post('/api/extractReportDetails', (req,res) => {  extractReport.handleDetails(req, res, db) })
+app.post('/api/extractReportDetails', verifyToken, (req,res) => {  extractReport.handleDetails(req, res, db) })
 
-app.post('/api/sendNotification', (req,res) => {  notification.handleDetails(req, res, db) })
+app.post('/api/sendNotification', verifyToken, (req,res) => {  notification.handleDetails(req, res, db) })
 
-app.post('/api/notice', (req,res) => { notice.handleDetails(req, res, db) })
+app.post('/api/notice', verifyToken, (req,res) => { notice.handleDetails(req, res, db) })
 
-app.post('/api/compare', (req,res) => {compare.handleDetails(req, res, db) })
+app.post('/api/compare', verifyToken, (req,res) => {compare.handleDetails(req, res, db) })
 
 
 /*

@@ -27,8 +27,10 @@ function getDateTime() {
 
 const handleChallan = (req, res, db) => {
     const {policeStation, challan, type} = req.body;
-    // console.log('Police Station', policeStation);
-    // console.log(challan);
+    if (req.userId !== policeStation)
+     res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+
+    else{
     var dateChallan;
 
     db.select('id','dateChallan').from('Users')
@@ -76,6 +78,8 @@ const handleChallan = (req, res, db) => {
        //.catch(err => console.log(err))
        .catch(err => res.status(400).json('Error in adding details'))
     }  
+
+  }
 }
 
 module.exports = {

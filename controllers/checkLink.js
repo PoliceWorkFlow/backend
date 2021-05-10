@@ -1,21 +1,23 @@
 const police_station = ['Nangal', 'City Morinda', 'Sri Anandpur Sahib', 'City Rupnagar', 'Kiratpur Sahib', 'Sri Chamkaur Sahib', 'Sadar Rupnagar', 'Sadar Morinda', 'Nurpurbedi', 'Singh Bhagwantpur', 'SSP Office'];
+var jwt = require('jsonwebtoken');
 
 const handleForgot = (req, res, db) => {
-    const { station, pass } = req.body;
+    const { station, token } = req.body;
     const index = police_station.indexOf(station) + 1;
-    console.log(pass);
 
-    db.select('*').from('Users')
-    .where('id', '=', index)
-    .then(data => { 
-        console.log(data[0].password)
-        if(data[0].password === pass)
-         res.json('success');
-        else 
-         res.json('failure');
-    })
-    .catch(err => res.status(400).json('failure'))
-
+    if (!token)
+       return res.status(403).send({ auth: false, message: 'No token provided.' });
+    
+    jwt.verify(token, 'forgot', function(err, decoded) {
+    if (err)
+    return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+     
+    if(decoded.id === index)
+      return res.json('success');
+    else  
+        res.json('failure');
+    });
+       
 }
 module.exports = {
     handleForgot: handleForgot

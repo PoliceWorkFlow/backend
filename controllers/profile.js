@@ -2,9 +2,12 @@ const police_station = ['Nangal', 'City Morinda', 'Sri Anandpur Sahib', 'City Ru
 
 const handleProfile = (req, res, db, bcrypt) => {
     const { station, type } = req.body;
-
-    if (type === 'check') {
-        db.select('*').from('Users')
+    
+    if (req.userId !== station)
+     res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+     
+    else if (type === 'check') {
+        db.select('id','email', 'username').from('Users')
             .where('id', '=', station)
             .then(data => {
                 res.json(data);

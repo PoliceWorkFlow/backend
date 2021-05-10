@@ -27,6 +27,10 @@ function getDateTime() {
 
 const handleRecovery = (req, res, db) => {
     const {policeStation, recovery, type} = req.body;
+    if (req.userId !== policeStation)
+     res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    
+    else{ 
     
     if(type === 'update'){
         db('Recovery')
@@ -76,6 +80,7 @@ const handleRecovery = (req, res, db) => {
             res.json('success');
         }) .catch(err => res.status(400).json('Error in adding details'))
     } 
+}
 }
 
 module.exports = {
