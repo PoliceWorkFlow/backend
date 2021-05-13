@@ -7,23 +7,23 @@ const schedule = require('node-schedule');
 
 app.use(express.json());
 
-// app.use(cors({
-//   origin: 'http://localhost:3001',
-// }));
+app.use(cors({
+  origin: 'http://localhost:3001',
+}));
 
-
+/*
 app.use(cors({
   origin: 'http://103.118.50.49',
 }));
-
+*/
 
 const db = knex({
   client: 'pg',
   connection: {
     host: '127.0.0.1',
-    user: 'dilpreet',
-    password: 'dilpreet',
-    database: 'police',
+    user: 'postgres',
+    password: '1234',
+    database: 'postgres',
   }
 });
 
