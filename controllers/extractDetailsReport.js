@@ -1,10 +1,11 @@
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 const handleDetails = (req, res, db) => {
-  const { id, monYear, range } = req.body;
+  const { monYear, range } = req.body;
+  const id = req.userId;
 
   if (req.userId !== id)
-    res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    res.status(500).send({ auth: false, message: 'Failed  authenticate token.' });
 
   else {
     const dates = [];
