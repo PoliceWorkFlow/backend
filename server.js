@@ -2,28 +2,31 @@ const express = require('express');
 const knex = require('knex');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
-const app = express();
 const schedule = require('node-schedule');
+var sqlinjection = require('sql-injection');
+
+const app = express();
 
 app.use(express.json());
+//app.use(sqlinjection);  // add sql-injection middleware here
 
-app.use(cors({
-  origin: 'http://localhost:3001',
-}));
+// app.use(cors({
+//   origin: 'http://localhost:3001',
+// }));
+ 
 
-/*
 app.use(cors({
   origin: 'http://103.118.50.49',
 }));
-*/
+
 
 const db = knex({
   client: 'pg',
   connection: {
     host: '127.0.0.1',
-    user: 'postgres',
-    password: '1234',
-    database: 'postgres',
+    user: 'dilpreet',
+    password: 'dilpreet',
+    database: 'police',
   }
 });
 
@@ -84,7 +87,7 @@ app.post('/api/extractDetailsProgressReport', verifyToken, (req,res) => { extrac
 
 app.post('/api/extractReportDetails', verifyToken, (req,res) => {  extractReport.handleDetails(req, res, db) })
 
-app.post('/api/sendNotification', verifyToken, (req,res) => {  notification.handleDetails(req, res, db) })
+app.post('/api/sendNotification', verifyToken, (req,res) => {  notification.handleDetails(req, res, db, bcrypt) })
 
 app.post('/api/notice', verifyToken, (req,res) => { notice.handleDetails(req, res, db) })
 

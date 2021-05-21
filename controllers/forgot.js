@@ -1,4 +1,5 @@
 const police_station = ['Nangal', 'City Morinda', 'Sri Anandpur Sahib', 'City Rupnagar', 'Kiratpur Sahib', 'Sri Chamkaur Sahib', 'Sadar Rupnagar', 'Sadar Morinda', 'Nurpurbedi', 'Singh Bhagwantpur', 'SSP Office'];
+//const police_station = ['PS1','PS2','PS3','PS4','PS5','PS6','PS7','PS8','PS9','PS10','SSP Office']
 var nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
 
@@ -13,7 +14,7 @@ const handleForgot = (req, res, db) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'ssprupnagar123@gmail.com',
+            user: 'cktdilpreet@gmail.com',
             pass: ''
         }
     });
@@ -21,8 +22,8 @@ const handleForgot = (req, res, db) => {
     db.select('*').from('Users')
         .where('id', '=', index)
         .then(data => {
-            //console.log(data[0]);
-            //var email = data[0].email;
+           // console.log(data[0].email);
+           // var email = data[0].email;
             var email = '2018csb1085@iitrpr.ac.in'
 
             const token =  jwt.sign(payload, "forgot");
@@ -30,11 +31,11 @@ const handleForgot = (req, res, db) => {
             var currentDate = new Date();
             var mailOptions = {
                 to: email,
-                from: "ssprupnagar123@gmail.com",
-                subject: "Password Reset",
+                from: "cktdilpreet@gmail.com",
+                subject: "Password Reset (Testing)",
                 html: `
              <p>You requested for password reset</p>
-             <h4>Click on this <a href = 'http://103.118.50.49/change-password/${currentDate}+++${token}++${station}' >link</a> to reset password</h4>
+             <h4>Click on this <a href = 'http://103.118.50.49//change-password/${currentDate}+++${token}++${station}' >link</a> to reset password</h4>
              <h4>Link will be active for only 15 minutes</h4>
              `
             }

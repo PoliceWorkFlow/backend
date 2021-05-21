@@ -45,11 +45,12 @@ const handleSignin = (req, res, db, bcrypt) => {
           }) 
         .catch(err => res.status(400).json('unable to login')) 
     }
-
+    
     db.select('*').from('Users')
        .where('username', '=', username)
        .then(data => {
-           const isValid = bcrypt.compareSync(password, data[0].password.trim());
+
+        const isValid = bcrypt.compareSync(password, data[0].password.trim());
   
            if(isValid){
               id = data[0].id;

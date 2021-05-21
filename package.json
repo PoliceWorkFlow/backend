@@ -15,7 +15,8 @@
     "node-schedule": "^2.0.0",
     "nodemailer": "^6.5.0",
     "nodemon": "^2.0.7",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "sql-injection": "0.0.6"
   },
   "devDependencies": {},
   "scripts": {
