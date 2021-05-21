@@ -3,7 +3,6 @@ const knex = require('knex');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const schedule = require('node-schedule');
-var sqlinjection = require('sql-injection');
 
 const app = express();
 
