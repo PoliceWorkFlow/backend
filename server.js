@@ -3,12 +3,10 @@ const knex = require('knex');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const schedule = require('node-schedule');
-var sqlinjection = require('sql-injection');
 
 const app = express();
-
 app.use(express.json());
-//app.use(sqlinjection);  // add sql-injection middleware here
+
 
 // app.use(cors({
 //   origin: 'http://localhost:3001',
@@ -52,7 +50,7 @@ const verifyToken = require("./auth/verifyToken");
 
 //db.select().from('Users').then(data => { console.log(data)})
 
-const job = schedule.scheduleJob('00 12 26 * *', function(){
+const job = schedule.scheduleJob('0 12 2,5,10 * *', function(){
      monthly.handleMonthly(db);
 });
 

@@ -10,7 +10,7 @@ const handleDetails = (req, res, db, bcrypt) => {
             service: 'gmail',
             auth: {
                 user: 'no.reply.pprp@gmail.com',
-                pass: ''
+                pass: 'pprp@123'
               }
            });
 
@@ -20,12 +20,10 @@ const handleDetails = (req, res, db, bcrypt) => {
             db.select('email').from('Users')
                 .where('id', '=', index)
                 .then(data => {
-                    // console.log(data[0].email);
-    
+                     //console.log(data[0].email);
                      var mailOptions = {
                          from: 'no.reply.pprp@gmail.com',
-                        // to: data[0].email,
-                         to: '2018csb1085@iitrpr.ac.in',
+                         to: data[0].email,
                          subject: 'Update ' + monYear + ' Report for ' + type,
                          html: 'Hi ' + ps + ' Police Station' + '.' +
                              '<p> Kindly update <b>' + type + ' report for ' + monYear + '</b> ASAP. </p>' +
@@ -53,13 +51,12 @@ const handleDetails = (req, res, db, bcrypt) => {
                     .then(data => {
                         email.push(data[0].email)
                         if(email.length === ps.length){
-                          //console.log(email);
                            
-                           /* var mailOptions = {
-                         from: 'cktdilpreet@gmail.com',
+                         var mailOptions = {
+                         from: 'no.reply.pprp@gmail.com',
                          to: email,
                          subject: 'Update ' + monYear + ' Report for ' + type,
-                         html: 'Hi ' + ps + ' Police Station' + '.' +
+                         html: 'Hi Police Station' + '.' +
                              '<p> Kindly update <b>' + type + ' report for ' + monYear + '</b> ASAP. </p>' +
                              '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
          
@@ -71,7 +68,7 @@ const handleDetails = (req, res, db, bcrypt) => {
                          else
                              res.json('Email sent');
                      });
-                     */
+                     
                         }
                     })
             }

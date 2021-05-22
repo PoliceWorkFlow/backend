@@ -8,34 +8,32 @@ const handleForgot = (req, res, db) => {
     const index = police_station.indexOf(station) + 1;
 
     const payload = {
-        id: index
+        id: index,
+        date: new Date() 
     };
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'cktdilpreet@gmail.com',
-            pass: ''
+            user: 'no.reply.pprp@gmail.com',
+            pass: 'pprp@123'
         }
     });
 
     db.select('*').from('Users')
         .where('id', '=', index)
         .then(data => {
-           // console.log(data[0].email);
-           // var email = data[0].email;
-            var email = '2018csb1085@iitrpr.ac.in'
-
+            
+            var email = data[0].email;
             const token =  jwt.sign(payload, "forgot");
 
-            var currentDate = new Date();
             var mailOptions = {
                 to: email,
-                from: "cktdilpreet@gmail.com",
+                from: "no.reply.pprp@gmail.com",
                 subject: "Password Reset (Testing)",
                 html: `
              <p>You requested for password reset</p>
-             <h4>Click on this <a href = 'http://103.118.50.49//change-password/${currentDate}+++${token}++${station}' >link</a> to reset password</h4>
+             <h4>Click on this <a href = 'http://103.118.50.49/change-password/${token}+++${station}' >link</a> to reset password</h4>
              <h4>Link will be active for only 15 minutes</h4>
              `
             }

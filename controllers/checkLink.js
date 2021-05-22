@@ -14,10 +14,17 @@ const handleForgot = (req, res, db) => {
     if (err)
     return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
      
-    if(decoded.id === index)
-      return res.json('success');
+    if(decoded.id === index){
+        let date1 = decoded.date;
+        let currentDate = new Date();
+        let difference = currentDate - date1;
+        if (difference > 900000) 
+          return res.status(400).json('link expired')
+        else  
+          return res.json('success');
+    }
     else  
-        res.json('failure');
+        res.status(400).json('failure');
     });
        
 }

@@ -4,12 +4,21 @@ const police_station = ['Nangal', 'City Morinda', 'Sri Anandpur Sahib', 'City Ru
 
 const handleMonthly = (db) => {
     var monYear = months[new Date().getMonth()] + ' ' + new Date().getFullYear();
+    var year = monYear.split(' ')[1];
+    var index = new Date().getMonth();
+
+    if(index === 0)
+       year = year - 1;
+    else
+      index = index - 1;
+
+    monYear = months[index] + ' ' + year;
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'ssprupnagar123@gmail.com',
-            pass: ''
+            user: 'no.reply.pprp@gmail.com',
+            pass: 'pprp@123'
         }
     });
 
@@ -38,16 +47,17 @@ const handleMonthly = (db) => {
             else  
             type = type + ', Under Local & Special';
         }
-
-        db.select('email').from('Users')
+        
+        if(type !== ''){
+            db.select('email').from('Users')
             .where('id', '=', index)
             .then(data => {
                 const email = data[0].email;
-                console.log(email);
-                 console.log(type);
+                 console.log(email);
+                //  console.log(type);
                 var mailOptions = {
-                    from: 'ssprupnagar123@gmail.com',
-                    to: '2018csb1085@iitrpr.ac.in',
+                    from: 'no.reply.pprp@gmail.com',
+                    to: email,
                     subject: 'Update ' + monYear + ' Report',
                     html: 'Hi ' + police_station[index-1] + ' Police Station' + '.' +
                         '<p> Kindly update <b>' + type + ' Report for ' + monYear + '</b> ASAP. </p>' +
@@ -63,6 +73,9 @@ const handleMonthly = (db) => {
                  });
  
             })
+        }
+        
+         
     }
 
     var check = function (i) {
@@ -122,7 +135,7 @@ const handleMonthly = (db) => {
             })
     }
 
-    for (let i = 1; i <11; i++)
+    for (let i = 1; i <3; i++)
         check(i);
 
 }
