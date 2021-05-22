@@ -19,21 +19,21 @@ const handleDetails = (req, res, db) => {
                 data.map((det) => (
                     email.push(det.email)
                 ))
-                console.log(email);
-                // var mailOptions = {
-                //     from: 'no.reply.pprp@gmail.com',
-                //     to: email,
-                //     subject: subject,
-                //     html: ` <p>${message}</p>` +
-                //         '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
-                // };
+                //console.log(email);
+                var mailOptions = {
+                    from: 'no.reply.pprp@gmail.com',
+                    to: email,
+                    subject: subject,
+                    html: ` <p>${message}</p>` +
+                        '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
+                };
 
-                // transporter.sendMail(mailOptions, function (error, info) {
-                //     if (error)
-                //         res.status(400).json('unable to send email')
-                //     else
-                //         res.json('Email sent');
-                // });
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error)
+                        res.status(400).json('unable to send email')
+                    else
+                        res.json('Email sent');
+                });
             })
     }
     else {
@@ -44,22 +44,22 @@ const handleDetails = (req, res, db) => {
                 .then(data => {
                     email.push(data[0].email)
                     if (email.length === ps_choosen.length) {
-                      //  console.log(email);
-                        // var mailOptions = {
-                        //     from: 'no.reply.pprp@gmail.com',
-                        //     to: email,
-                        //     subject: subject,
-                        //     html: ` <p>${message}</p>` +
-                        //         '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
+                      // console.log(email);
+                        var mailOptions = {
+                            from: 'no.reply.pprp@gmail.com',
+                            to: email,
+                            subject: subject,
+                            html: ` <p>${message}</p>` +
+                                '<p> Regards  </p>' + '<p> SSP Office, Rupnagar  </p>'
 
-                        // };
+                        };
 
-                        // transporter.sendMail(mailOptions, function (error, info) {
-                        //     if (error)
-                        //         res.status(400).json('unable to send email')
-                        //     else
-                        //         res.json('Email sent');
-                        // }); 
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error)
+                                res.status(400).json('unable to send email')
+                            else
+                                res.json('Email sent');
+                        }); 
                     }
                 })
         }
