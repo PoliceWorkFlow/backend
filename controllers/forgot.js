@@ -2,15 +2,12 @@ const police_station = ['Nangal', 'City Morinda', 'Sri Anandpur Sahib', 'City Ru
 //const police_station = ['PS1','PS2','PS3','PS4','PS5','PS6','PS7','PS8','PS9','PS10','SSP Office']
 var nodemailer = require('nodemailer');
 const jwt = require("jsonwebtoken");
+var generator = require('generate-password');
 
 const handleForgot = (req, res, db) => {
     const { station } = req.body;
     const index = police_station.indexOf(station) + 1;
 
-    const payload = {
-        id: index,
-        date: new Date() 
-    };
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -20,33 +17,42 @@ const handleForgot = (req, res, db) => {
         }
     });
 
+    var code = generator.generate({
+        length: 8,
+        numbers: true
+    });
+
     db.select('*').from('Users')
         .where('id', '=', index)
         .then(data => {
             
             var email = data[0].email;
+            const payload = {
+                id: index,
+                date: new Date(),
+                code: code
+               };
+
             const token =  jwt.sign(payload, "forgot");
 
             var mailOptions = {
                 to: email,
                 from: "no.reply.pprp@gmail.com",
-                subject: "Password Reset (Testing)",
+                subject: "Password Reset Code",
                 html: `
-             <p>You requested for password reset</p>
-             <h4>Click on this <a href = 'http://103.118.50.49/change-password/${token}+++${station}' >link</a> to reset password</h4>
-             <h4>Link will be active for only 15 minutes</h4>
+             <p>You requested for password reset code</p>
+             <h4> <b>Code : ${code}</b> </h4>
+             <h4>Code will be active for only 15 minutes</h4>
              `
             }
 
             transporter.sendMail(mailOptions, function (error, info) {
                 if (error)
-                    res.status(400).json('unable to send email')
+                    res.status(400).json({msg:'unable to send email'})
                 else
-                    res.json('Email sent');
+                    res.json({token: token, msg:'Email sent'});
             });
         })
-
-
 }
 
 module.exports = {

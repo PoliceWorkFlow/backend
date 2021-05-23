@@ -4,7 +4,7 @@ const police_station = ['Nangal', 'City Morinda', 'Sri Anandpur Sahib', 'City Ru
 var jwt = require('jsonwebtoken');
 
 const handleForgot = (req, res, db) => {
-    const { station, token } = req.body;
+    const { station, token, code } = req.body;
     const index = police_station.indexOf(station) + 1;
 
     if (!token)
@@ -13,15 +13,19 @@ const handleForgot = (req, res, db) => {
     jwt.verify(token, 'forgot', function(err, decoded) {
     if (err)
     return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-     
+
     if(decoded.id === index){
-        let date1 = decoded.date;
-        let currentDate = new Date();
-        let difference = currentDate - date1;
-        if (difference > 900000) 
-          return res.status(400).json('link expired')
-        else  
-          return res.json('success');
+        if(code === decoded.code){
+            let date1 = decoded.date;
+            let currentDate = new Date();
+            let difference = currentDate - date1;
+            if (difference > 900000) 
+            return res.status(400).json('link expired')
+            else  
+            return res.json('success');
+        }
+        else
+        return res.status(400).json('wrong code')
     }
     else  
         res.status(400).json('failure');

@@ -19,7 +19,7 @@ const handleDetails = (req, res, db) => {
                 data.map((det) => (
                     email.push(det.email)
                 ))
-                //console.log(email);
+               // console.log(email);
                 var mailOptions = {
                     from: 'no.reply.pprp@gmail.com',
                     to: email,
@@ -44,7 +44,7 @@ const handleDetails = (req, res, db) => {
                 .then(data => {
                     email.push(data[0].email)
                     if (email.length === ps_choosen.length) {
-                      // console.log(email);
+                       //console.log(email);
                         var mailOptions = {
                             from: 'no.reply.pprp@gmail.com',
                             to: email,
