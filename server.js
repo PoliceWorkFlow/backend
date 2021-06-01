@@ -14,7 +14,7 @@ app.use(express.json());
  
 
 app.use(cors({
-  origin: 'http://103.118.50.49',
+  origin: 'http://psprp.iitrpr.ac.in',
 }));
 
 
